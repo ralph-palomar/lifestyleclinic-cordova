@@ -36,10 +36,10 @@ function MedicationForm(props) {
 export class SaveMedications extends React.Component {
     handleClick = (event) => {
         saveMedications(() => {
-            back();
             const refresh = document.querySelector('#refresh_medications');
             if (refresh != null) {
                 refresh.click();
+                setTimeout(back(), 500);
             }
         });
     }

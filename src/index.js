@@ -13,7 +13,6 @@ import { loadPage, getUserPhoto, resetUserPassword, sendEmail, verifyResetPasswo
 import axios from 'axios';
 import ons from 'onsenui';
 import Cookies from 'universal-cookie';
-import FacebookLogin from 'react-facebook-login';
 import 'cordova_script';
 
 export const cookies = new Cookies();
@@ -313,6 +312,9 @@ class App extends React.Component {
 			path: cookieSettings.path
 		});
 		this.nav.resetToPage('login.html', { pop: true }).then(() => {
+			if (!window.cordova) {
+				window.location.href = process.env.REACT_APP_HOME_PAGE;
+			}
 			this.renderFacebookLogin();
 			this.renderForgotPassword();
 		});
@@ -320,16 +322,7 @@ class App extends React.Component {
 	renderFacebookLogin = () => {
 		const facebook_loginBtn = document.querySelector('div#facebook_loginBtn');
 		if (facebook_loginBtn != null) {
-			ReactDOM.render(
-				<FacebookLogin
-					appId="607869309830124"
-					autoLoad={false}
-					fields="name,email,picture"
-					size="small"
-					callback={this.responseFacebook}
-					icon="fa-facebook"/>,
-				facebook_loginBtn
-			);
+			ReactDOM.render(<FacebookLogin />, facebook_loginBtn);
 		}
 	}
 	renderForgotPassword = () => {
@@ -567,6 +560,30 @@ export class VerifyAccount extends React.Component {
 				<div align="center"></div>
 			</React.Fragment>
 		)
+	}
+}
+
+class FacebookLogin extends React.Component {
+	handleClick = (event) => {
+		window.facebookConnectPlugin.login(
+			['public_profile','email'],
+			(success) => {
+				
+			},
+			(failure) => {
+
+			}
+		);
+	}
+	render() {
+		return (
+			<React.Fragment>		
+				<ons-button modifier="large" onClick={this.handleClick}>
+					<i className="fab fa-facebook-f fa-lg fa-fw"></i>
+					Continue with Facebook
+				</ons-button>
+			</React.Fragment>
+		);
 	}
 }
 

@@ -72,10 +72,10 @@ function VitalSignsForm(props) {
 export class SaveVitalSigns extends React.Component {
     handleClick = (event) => {
         saveVitalSigns(() => {
-            back();
             const refresh = document.querySelector('#refresh_vitalsigns');
             if (refresh != null) {
                 refresh.click();
+                setTimeout(back(), 500);
             }
         });
     }
