@@ -1,0 +1,7 @@
+build/
+node_modules/
+platforms/
+www/
+.env
+.env.*
+package-lock.json

@@ -1,0 +1,30 @@
+label.form {
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    float: left;
+    padding-bottom: 10px;
+}
+
+label.profile {
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    float: left;
+}
+
+#fab_add {
+    position: fixed;
+    margin-top: 26px;
+}
+
+ons-progress-circular {
+    position: fixed;
+    left: 45%;
+    top: 10%;
+}
+
+div.modal {
+    position: fixed;
+    opacity: 0%;
+}

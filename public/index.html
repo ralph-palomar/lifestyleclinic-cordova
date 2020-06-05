@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">	
+    <title>Lifestyle Clinic</title>
+
+<body>
+  <div id="root"></div>
+
+  <template id="login.html">
+    <ons-page id="login">
+      <div id="login_pb" style="display: none;">
+        <ons-progress-circular indeterminate>
+          </ons-progress-bar>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div style="text-align: center; margin-top: 160px">
+        <ons-card style="text-align: center">
+          <p>
+            <ons-input id="index_email" placeholder="Email" modifier="material"></ons-input>
+          </p>
+          <p>
+            <ons-input id="index_password" placeholder="Password" type="password" modifier="material"></ons-input>
+          </p>
+          <p>
+            <ons-button modifier="quiet" onclick="fn.register()">Register</ons-button>
+            <ons-button onclick="fn.login()">Sign in</ons-button>
+            <div id="facebook_loginBtn" style="text-align: center"></div>
+          </p>
+        </ons-card>
+      </div>
+      <div id="google_loginBtn" style="text-align: center; margin-top: 10px"></div>
+      <div id="forgotPasswordBtn" style="text-align: center; margin-top: 10px"></div>
+    </ons-page>
+  </template>
+
+  <template id="home.html">
+    <ons-page id="home">
+      <ons-splitter>
+        <ons-splitter-side id="menu" side="left" width="75%" collapse swipeable>
+          <ons-page>
+            <ons-list>
+              <ons-list-item id="badge-list-item">
+                <div id="badge"></div>
+              </ons-list-item>
+              <ons-list-item id="home-list-item" onclick="fn.load('main.html')" tappable modifier="chevron">
+                <i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;Home
+              </ons-list-item>
+              <ons-list-item id="profile-list-item" onclick="fn.load('profile.html')" tappable modifier="chevron">
+                <i class="zmdi zmdi-account zmdi-hc-fw"></i>&nbsp;Profile
+              </ons-list-item>
+              <ons-list-item id="admin_menu" style="display: none" expandable>
+                <i class="zmdi zmdi-settings zmdi-hc-fw"></i>&nbsp;Administration
+                <div class="expandable-content">
+                  <ons-list-item id="user-list-item" onclick="fn.load('users.html')" tappable modifier="chevron">
+                    <i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&nbsp;Accounts
+                  </ons-list-item>
+                </div>
+              </ons-list-item>
+              <ons-list-item id="medical-record-list-item" onclick="fn.load('medical_record.html')">
+                <i class="zmdi zmdi-folder-person zmdi-hc-fw"></i>&nbsp;Medical Record
+              </ons-list-item>
+              <ons-list-item onclick="fn.logout()" tappable>
+                <i class="zmdi zmdi-close zmdi-hc-fw"></i>&nbsp;Logout
+              </ons-list-item>
+            </ons-list>
+          </ons-page>
+        </ons-splitter-side>
+        <ons-splitter-content id="content" page="main.html"></ons-splitter-content>
+      </ons-splitter>
+      <div id="confirm_logout"></div>
+    </ons-page>
+  </template>
+
+  <template id="medical_record.html">
+    <ons-page id="medical_record">
+      <div id="medical_record_main"></div>
+    </ons-page>
+  </template>
+
+  <template id="main.html">
+    <ons-page id="main">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Lifestyle Clinic
+        </div>
+      </ons-toolbar>
+      <div id="main_pb" style="display: none;">
+        <ons-progress-circular indeterminate>
+          </ons-progress-bar>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
+        Swipe right to open the menu!
+      </p>
+    </ons-page>
+  </template>
+
+  <template id="basicinfo.html">
+    <ons-page id="basicinfo">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Basic Information
+        </div>
+        <div class="right" id="basicinfo_saveBtn">
+        </div>
+      </ons-toolbar>
+      <div id="basic_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div id="basicinfo_form"></div>
+    </ons-page>
+  </template>
+
+  <template id="illnesses.html">
+    <ons-page id="illnesses">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Illnesses
+        </div>
+        <div class="right" id="illnesses_saveBtn"></div>
+      </ons-toolbar>
+      <div id="illnesses_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div id="illnesses_list"></div>
+    </ons-page>
+  </template>
+
+  <template id="diet.html">
+    <ons-page id="diet">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Diet
+        </div>
+        <div class="right" id="diet_saveBtn"></div>
+      </ons-toolbar>
+      <div id="diet_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div id="diet_list"></div>
+    </ons-page>
+  </template>
+
+  <template id="medications.html">
+    <ons-page id="medications">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Medications
+        </div>
+        <div class="right" id="medications_saveBtn"></div>
+      </ons-toolbar>
+      <div id="medications_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div id="medications_list"></div>
+    </ons-page>
+  </template>
+
+  <template id="new_medication.html">
+    <ons-page id="new_medication">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          Add Medication
+        </div>
+        <div class="right" id="save_new_medication"></div>
+      </ons-toolbar>
+      <div id="new_medication_component"></div>
+    </ons-page>
+  </template>
+
+  <template id="others.html">
+    <ons-page id="others">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Others
+        </div>
+        <div class="right" id="others_saveBtn"></div>
+      </ons-toolbar>
+      <div id="others_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div id="others_list"></div>
+    </ons-page>
+  </template>
+
+  <template id="profile.html">
+    <ons-page id="profile">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          My Profile
+        </div>
+        <div class="right">
+          <ons-button modifier="quiet" id="profile_settings">
+            <i class="zmdi zmdi-settings zmdi-hc-lg"></i>
+          </ons-button>
+        </div>
+      </ons-toolbar>
+      <div id="profile_pb" style="display: none;">
+        <ons-progress-circular indeterminate>
+          <div class="modal">
+            <div class="modal__content">
+              </ons-progress-bar>
+            </div>
+          </div>
+      </div>
+      <div id="main_display"></div>
+      <ons-carousel swipeable auto-scroll overscrollable id="carousel">
+        <ons-carousel-item>
+          <div id="profile_basic_info"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_illnesses"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_medications"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_vital_signs"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_diet"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_others"></div>
+        </ons-carousel-item>
+        </div>
+      </ons-carousel>
+    </ons-page>
+  </template>
+
+  <template id="user_profile.html">
+    <ons-page id="user_profile">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          Patient Profile
+        </div>
+      </ons-toolbar>
+      <div id="user_profile_component"></div>
+      <ons-carousel swipeable auto-scroll overscrollable id="carousel">
+        <ons-carousel-item>
+          <div id="profile_basic_info"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_illnesses"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_medications"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_vital_signs"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_diet"></div>
+        </ons-carousel-item>
+        <ons-carousel-item>
+          <div id="profile_others"></div>
+        </ons-carousel-item>
+        </div>
+      </ons-carousel>
+    </ons-page>
+  </template>
+
+  <template id="register.html">
+    <ons-page id="register">
+      <div id="register_pb" hidden>
+        <ons-progress-circular indeterminate>
+          <div class="modal">
+            <div class="modal__content">
+              </ons-progress-bar>
+            </div>
+          </div>
+      </div>
+      <div style="text-align: center; margin-top: 120px">
+        <ons-card style="text-align: center">
+          <p>
+            <ons-input id="register_email" placeholder="Email" modifier="material"></ons-input>
+          </p>
+          <p>
+            <ons-input id="register_firstname" placeholder="First Name" modifier="material"></ons-input>
+          </p>
+          <p>
+            <ons-input id="register_lastname" placeholder="Last Name" modifier="material"></ons-input>
+          </p>
+          <p>
+            <ons-input id="register_password" placeholder="Password" type="password" modifier="material"></ons-input>
+          </p>
+          <p>
+            <ons-input id="register_cpassword" placeholder="Confirm Password" type="password" modifier="material">
+            </ons-input>
+          </p>
+          <p>
+            <ons-button onclick="fn.back()" modifier="quiet">Back</ons-button>
+            <ons-button onclick="fn.createAccount()">Submit</ons-button>
+          </p>
+        </ons-card>
+      </div>
+    </ons-page>
+  </template>
+
+  <template id="users.html">
+    <ons-page id="users">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Accounts
+        </div>
+        <div class="right">
+          <ons-button id="refreshUsersBtn" modifier="quiet"><i class="zmdi zmdi-refresh-sync zmdi-hc-2x"></i></ons-button>
+        </div>
+      </ons-toolbar>
+      <div id="user_list"></div>
+      <div id="users_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+        <div class="modal">
+          <div class="modal__content">
+          </div>
+        </div>
+      </div>
+    </ons-page>
+  </template>
+
+  <template id="vitalsigns.html">
+    <ons-page id="vitalsigns">
+      <ons-toolbar>
+        <div class="left">
+          <ons-toolbar-button onclick="fn.open()">
+            <ons-icon icon="md-menu"></ons-icon>
+          </ons-toolbar-button>
+        </div>
+        <div class="center">
+          Vital Signs
+        </div>
+        <div class="right" id="vitalsigns_saveBtn"></div>
+      </ons-toolbar>
+      <div id="vitalsigns_pb" style="display: none;">
+        <ons-progress-circular indeterminate></ons-progress-circular>
+          <div class="modal">
+            <div class="modal__content">
+            </div>
+          </div>
+      </div>
+      <div id="vitalsigns_list"></div>
+    </ons-page>
+  </template>
+
+  <template id="new_vitalsign.html">
+    <ons-page id="new_vitalsign">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          Add Vital Sign
+        </div>
+        <div class="right" id="save_new_vs"></div>
+      </ons-toolbar>
+      <div id="new_vs_component"></div>
+    </ons-page>
+  </template>
+
+  <template id="new_profile_pic.html">
+    <ons-page id="new_profile_pic">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button></ons-back-button>
+        </div>
+        <div class="center">
+          New Photo
+        </div>
+        <div class="right">
+          <ons-button modifier="quiet" id="save_new_pp">Save</ons-button>
+        </div>
+      </ons-toolbar>
+      <div id="new_pp_component"></div>
+    </ons-page>
+  </template>
+
+</body>
+
+</html>
